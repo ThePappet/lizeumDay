@@ -23,6 +23,19 @@
     html += '<svg class="block__ornament" viewBox="0 0 120 12" aria-hidden="true"><use href="#ornament"/></svg>';
     html += '<p class="block__text' + (key === "main" ? " block__text--initial" : "") + '">' +
             esc(data.text) + "</p>";
+
+    if (data.image && data.image.src) {
+      html += '<figure class="plate">';
+      html += '<span class="plate__frame">';
+      html += '<img class="plate__img" src="' + esc(data.image.src) + '" alt="' +
+              esc(data.image.caption || data.title) + '" loading="lazy" decoding="async">';
+      html += "</span>";
+      if (data.image.caption) {
+        html += '<figcaption class="plate__caption">' + esc(data.image.caption) + "</figcaption>";
+      }
+      html += "</figure>";
+    }
+
     html += '<div class="block__buttons">';
 
     (data.buttons || []).forEach(function (b) {

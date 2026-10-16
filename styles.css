@@ -189,6 +189,71 @@ body {
   color: var(--gold);
 }
 
+/* ---------- Вклеенная фотография ---------- */
+
+.plate {
+  margin: 1.9rem auto 0;
+  max-width: 32rem;
+}
+
+.plate__frame {
+  display: block;
+  padding: 9px;
+  background-color: #fbf5e6;
+  background-image: linear-gradient(140deg, #fdf8ec 0%, #f0e3c6 60%, #e6d5ae 100%);
+  border: 1px solid var(--gold-pale);
+  box-shadow:
+    0 1px 0 rgba(255, 253, 245, 0.9) inset,
+    0 2px 5px rgba(90, 65, 25, 0.28),
+    0 10px 22px rgba(70, 48, 18, 0.2);
+  position: relative;
+  transform: rotate(-0.5deg);
+}
+
+/* Уголки, будто фотография вставлена в прорези паспарту */
+.plate__frame::before,
+.plate__frame::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--gold);
+  opacity: 0.55;
+}
+.plate__frame::before {
+  top: 4px;
+  left: 4px;
+  border-top: 1px solid var(--gold);
+  border-left: 1px solid var(--gold);
+}
+.plate__frame::after {
+  bottom: 4px;
+  right: 4px;
+  border-bottom: 1px solid var(--gold);
+  border-right: 1px solid var(--gold);
+}
+
+.plate__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: contain;
+  border: 1px solid rgba(120, 92, 40, 0.35);
+  filter: sepia(0.14) saturate(0.92) contrast(1.02) brightness(1.01);
+}
+
+.plate__caption {
+  margin: 0.7rem 0 0;
+  font-family: var(--serif-body);
+  font-style: italic;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--ink-faint);
+  letter-spacing: 0.01em;
+}
+
 /* ---------- Кнопки ---------- */
 
 .block__buttons {
@@ -265,6 +330,7 @@ body {
 .block.is-entering .btn,
 .block.is-entering .block__title,
 .block.is-entering .block__text,
+.block.is-entering .plate,
 .block.is-entering .block__ornament {
   opacity: 0;
   animation: rise-in 0.55s var(--ease) forwards;
@@ -272,6 +338,7 @@ body {
 .block.is-entering .block__title    { animation-delay: 0.05s; }
 .block.is-entering .block__ornament { animation-delay: 0.14s; }
 .block.is-entering .block__text     { animation-delay: 0.20s; }
+.block.is-entering .plate           { animation-delay: 0.24s; }
 .block.is-entering .block__buttons .btn:nth-child(1) { animation-delay: 0.30s; }
 .block.is-entering .block__buttons .btn:nth-child(2) { animation-delay: 0.37s; }
 .block.is-entering .block__buttons .btn:nth-child(3) { animation-delay: 0.44s; }
@@ -351,6 +418,7 @@ body {
   .block.is-entering .btn,
   .block.is-entering .block__title,
   .block.is-entering .block__text,
+  .block.is-entering .plate,
   .block.is-entering .block__ornament {
     animation: none;
     opacity: 1;
