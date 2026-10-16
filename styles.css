@@ -1,0 +1,360 @@
+/* ============================================================
+   День лицеиста — страница альбома 1830-х
+   ============================================================ */
+
+:root {
+  --paper:        #f3e7cf;
+  --paper-deep:   #e8d8b6;
+  --paper-edge:   #dcc79c;
+  --ink:          #3a2c1a;
+  --ink-soft:     #5c4a32;
+  --ink-faint:    #7a6748;
+  --gold:         #a8843c;
+  --gold-bright:  #c9a24e;
+  --gold-pale:    #d9c48a;
+  --rule:         #b79a63;
+  --serif-body:   "Old Standard TT", "Times New Roman", Georgia, serif;
+  --serif-title:  "Playfair Display", "Old Standard TT", Georgia, serif;
+  --sheet-max:    42rem;
+  --ease:         cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--serif-body);
+  color: var(--ink);
+  background-color: #cdb990;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 248, 230, 0.35), transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(90, 66, 32, 0.28), transparent 65%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.14'/%3E%3C/svg%3E");
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 1.1rem 0.7rem 2.5rem;
+  line-height: 1.7;
+}
+
+/* ---------- Лист ---------- */
+
+.sheet-wrap { width: 100%; max-width: var(--sheet-max); }
+
+.sheet {
+  position: relative;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 20% 15%, rgba(255, 252, 240, 0.55), transparent 55%),
+    radial-gradient(ellipse at 85% 90%, rgba(180, 150, 95, 0.18), transparent 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23p)' opacity='0.09'/%3E%3C/svg%3E");
+  border: 1px solid var(--paper-edge);
+  box-shadow:
+    0 1px 0 rgba(255, 250, 235, 0.6) inset,
+    0 14px 40px rgba(50, 34, 12, 0.35),
+    0 3px 10px rgba(50, 34, 12, 0.25);
+  padding: 3.4rem 1.3rem 2.2rem;
+  overflow: hidden;
+}
+
+/* Внутренняя золотая рамка-линейка */
+.sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0.72rem;
+  border: 1px solid var(--gold-pale);
+  outline: 1px solid rgba(168, 132, 60, 0.35);
+  outline-offset: 2.5px;
+  pointer-events: none;
+}
+
+/* ---------- Виньетки и водяной знак ---------- */
+
+.corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  color: var(--gold);
+  opacity: 0.75;
+  pointer-events: none;
+}
+.corner--tl { top: 14px; left: 14px; }
+.corner--tr { top: 14px; right: 14px; transform: scaleX(-1); }
+.corner--bl { bottom: 14px; left: 14px; transform: scaleY(-1); }
+.corner--br { bottom: 14px; right: 14px; transform: scale(-1, -1); }
+
+.watermark-quill {
+  position: absolute;
+  right: -2.5rem;
+  bottom: -3rem;
+  width: 190px;
+  height: auto;
+  color: var(--gold);
+  opacity: 0.09;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+/* ---------- Шапка ---------- */
+
+.masthead {
+  position: relative;
+  text-align: center;
+  margin-bottom: 1.9rem;
+  z-index: 1;
+}
+
+.masthead__kicker {
+  margin: 0 0 0.9rem;
+  font-family: var(--serif-title);
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.facade {
+  width: 74px;
+  height: auto;
+  color: var(--gold);
+  opacity: 0.85;
+  display: inline-block;
+}
+
+/* ---------- Блок ---------- */
+
+.block {
+  position: relative;
+  z-index: 1;
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  will-change: opacity, transform;
+}
+
+.block.is-leaving {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition-duration: 0.3s;
+}
+
+.block__title {
+  font-family: var(--serif-title);
+  font-weight: 500;
+  font-size: clamp(1.55rem, 5.6vw, 2.15rem);
+  line-height: 1.25;
+  text-align: center;
+  margin: 0 0 0.5rem;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+
+/* Заголовок с золотой линейкой под ним */
+.block__title::after {
+  content: "";
+  display: block;
+  width: 58px;
+  height: 1px;
+  margin: 0.95rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.block__ornament {
+  display: block;
+  width: 108px;
+  height: auto;
+  color: var(--gold);
+  margin: 0.35rem auto 1.15rem;
+  opacity: 0.8;
+}
+
+.block__text {
+  font-size: clamp(1rem, 3.9vw, 1.09rem);
+  margin: 0 auto;
+  max-width: 36rem;
+  text-align: justify;
+  text-indent: 1.6em;
+  color: var(--ink-soft);
+  white-space: pre-line;
+  hyphens: auto;
+}
+
+/* Инициал — только в главном блоке */
+.block__text--initial::first-letter {
+  font-family: var(--serif-title);
+  font-size: 3.1em;
+  line-height: 0.82;
+  float: left;
+  padding: 0.08em 0.14em 0 0;
+  color: var(--gold);
+}
+
+/* ---------- Кнопки ---------- */
+
+.block__buttons {
+  display: grid;
+  gap: 0.65rem;
+  margin: 2rem 0 0;
+}
+
+.btn {
+  appearance: none;
+  font-family: var(--serif-title);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.07em;
+  color: var(--ink);
+  background-color: rgba(255, 250, 236, 0.5);
+  background-image: linear-gradient(180deg, rgba(255,253,245,0.7), rgba(226, 205, 160, 0.25));
+  border: 1px solid var(--gold-pale);
+  box-shadow:
+    0 1px 0 rgba(255, 252, 240, 0.7) inset,
+    0 1px 3px rgba(90, 65, 25, 0.14);
+  padding: 0.72rem 1.1rem;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.4;
+  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease),
+              color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.15s var(--ease);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--gold);
+  color: #2c2010;
+  background-color: rgba(240, 224, 186, 0.65);
+  box-shadow:
+    0 1px 0 rgba(255, 252, 240, 0.8) inset,
+    0 2px 7px rgba(90, 65, 25, 0.2);
+  outline: none;
+}
+
+.btn:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--paper),
+    0 0 0 3.5px var(--gold-bright);
+}
+
+.btn:active { transform: translateY(1px); }
+
+/* Кнопка «Свернуть» */
+.btn--back {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--ink-faint);
+  font-style: italic;
+  font-family: var(--serif-body);
+  font-size: 1rem;
+  letter-spacing: 0.03em;
+  margin-top: 0.35rem;
+  padding: 0.5rem;
+}
+
+.btn--back:hover,
+.btn--back:focus-visible {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--gold);
+}
+
+/* Штор-эффект кнопок при появлении блока */
+.block.is-entering .btn,
+.block.is-entering .block__title,
+.block.is-entering .block__text,
+.block.is-entering .block__ornament {
+  opacity: 0;
+  animation: rise-in 0.55s var(--ease) forwards;
+}
+.block.is-entering .block__title    { animation-delay: 0.05s; }
+.block.is-entering .block__ornament { animation-delay: 0.14s; }
+.block.is-entering .block__text     { animation-delay: 0.20s; }
+.block.is-entering .block__buttons .btn:nth-child(1) { animation-delay: 0.30s; }
+.block.is-entering .block__buttons .btn:nth-child(2) { animation-delay: 0.37s; }
+.block.is-entering .block__buttons .btn:nth-child(3) { animation-delay: 0.44s; }
+.block.is-entering .block__buttons .btn:nth-child(4) { animation-delay: 0.51s; }
+.block.is-entering .block__buttons .btn:nth-child(5) { animation-delay: 0.58s; }
+.block.is-entering .block__buttons .btn:nth-child(6) { animation-delay: 0.65s; }
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Подвал ---------- */
+
+.colophon {
+  margin-top: 2.4rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.ornament {
+  width: 110px;
+  height: auto;
+  color: var(--gold);
+  opacity: 0.7;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.colophon__text {
+  margin: 0;
+  font-family: var(--serif-title);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+}
+
+/* ---------- Планшет и ПК ---------- */
+
+@media (min-width: 560px) {
+  body { padding: 2.2rem 1.2rem 3.5rem; }
+
+  .sheet { padding: 4.2rem 3.4rem 2.8rem; }
+
+  .corner { width: 46px; height: 46px; }
+  .corner--tl { top: 18px; left: 18px; }
+  .corner--tr { top: 18px; right: 18px; }
+  .corner--bl { bottom: 18px; left: 18px; }
+  .corner--br { bottom: 18px; right: 18px; }
+
+  .watermark-quill { width: 240px; right: -1.5rem; bottom: -3.5rem; }
+
+  .block__buttons {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem 1rem;
+  }
+
+  .btn { padding: 0.8rem 1.2rem; font-size: 1rem; }
+
+  .btn--back { grid-column: 1 / -1; }
+}
+
+@media (min-width: 900px) {
+  .sheet { padding: 5rem 4.5rem 3.2rem; }
+  .facade { width: 88px; }
+}
+
+/* ---------- Меньше движения ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .block,
+  .block.is-leaving,
+  .block.is-entering { transition: none; }
+
+  .block.is-entering .btn,
+  .block.is-entering .block__title,
+  .block.is-entering .block__text,
+  .block.is-entering .block__ornament {
+    animation: none;
+    opacity: 1;
+  }
+
+  .btn { transition: none; }
+}
